@@ -13,7 +13,9 @@ HarSM is a compilation of all the standard most commonly used ISO 8583 DES based
 
  
 
-HarSM v 0.7 has the following features
+HarSM v 2 has the following features
+
+- Support for EMV 4.2 UDK/SessionKey/AAC/TC/ARQC/ARPC 
 
 - DES/TDES(Triple DES)/2TDES key generation
 
