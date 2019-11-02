@@ -2,7 +2,10 @@
 HarSM Java HSM Simulator
 
 formerly from http://www.m-sinergi.com/hairi
+
 2010-2019
+
+Read the api docs at doc.html
 
 Welcome,
 HarSM is a java webbased HSM simulator that performs the standard functions of ISO 8583 DES security.
