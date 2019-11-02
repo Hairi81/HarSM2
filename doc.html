@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>HarSM Java Web Based HSM Simulator</title>
+<link href="twoColElsLtHdr.css" rel="stylesheet" type="text/css" /><!--[if IE]>
+<style type="text/css"> 
+/* place css fixes for all versions of IE in this conditional comment */
+.twoColElsLtHdr #sidebar1 { padding-top: 30px; }
+.twoColElsLtHdr #mainContent { zoom: 1; padding-top: 15px; }
+/* the above proprietary zoom property gives IE the hasLayout it needs to avoid several bugs */
+</style>
+<![endif]-->
+<style type="text/css">
+<!--
+body {
+	background-color: #069;
+}
+a {
+	font-size: 16px;
+	color: #000;
+	font-weight: bold;
+}
+a:link {
+	text-decoration: none;
+	color: #06C;
+}
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	text-decoration: none;
+	color: #F00;
+}
+a:active {
+	text-decoration: none;
+	color: #F00;
+}
+-->
+</style></head>
+
+<body class="twoColElsLtHdr">
+
+<div id="container">
+  <div id="header">
+    <h2 align="center"> Java Web Based HSM Simulator</h2>
+    <h2 align="center">HarSM ver 0.9 new!!</h2>
+    <p align="center">Now Support CVV and PVV Calculation for VISA, Mastercard and AMEX cards</p>
+  <!-- end #header --></div>
+  <div id="sidebar1">
+    <h3>MENU</h3>
+    <ul>
+      <li>
+        <!-- end #sidebar1 -->
+        <a href="index.html">Welcome</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    <ul>
+      <li><a href="doc.html">Documentation</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    <ul>
+      <li><a href="sec.html">ISO 8583 Security Premier</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    <ul>
+      <li><a href="hsm.rar">Download</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    <ul>
+      <li><a href="http://www.fantasimanager.com/forum/viewforum.php?f=13">FORUM</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    <ul>
+      <li><a href="aboutme.html">About Me</a></li>
+    </ul>
+      <p>&nbsp;</p>
+    <ul>
+      <li><a href="help.html">HELPTHEKIDS</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    <ul>
+    
+      <li><a href="htest/index.html">HTest ISO 8583 <br />
+        Simulator
+      </a>
+        <p></p></li>
+      <li><a href="hthalesadaptor/index.html">HThalesAdaptor Java Thales Library</a></li>
+    </ul>
+    <p>&nbsp;</p>
+<p>&nbsp;</p>
+  </div>
+  <div id="mainContent">
+    <h1> Documentation</h1>
+    <ol>
+      <li><a href="#installation">Installation</a></li>
+      <li><a href="#usage">Usage</a></li>
+      <li><a href="#interface">HTTP GET Interface and terminology used</a></li>
+      <li><a href="#keygen">	        		Key Generation</a></li>
+      <li><a href="#keygencomp">Key Generation from components</a></li>
+      <li><a href="#kcv">Key Check Value Calculation</a></li>
+      <li><a href="#crypt">DES Encryption/Decryption</a></li>
+      <li><a href="#trans">Key Translation</a></li>
+      <li><a href="#mac">MAC Generation</a></li>
+      <li><a href="#pinblock">PINBLOCK Generation</a></li>
+      <li><a href="#CVV">CVV Calculation</a></li>
+      <li><a href="#PVV">PVV Calculation</a></li>
+    </ol>
+    <p>&nbsp;</p>
+    <p><a name="installation" id="Installation">1. Installation</a></p>
+    <p>To Install simply unzip the zip file, and you should see the following Directory structure</p>
+    <p>   - Keys</p>
+    <p>- Library</p>
+    <p>- Log</p>
+    <p>- properties</p>
+    <p>- webapp</p>
+    <p>HSM.jar</p>
+    <p>To Start the application simply type</p>
+    <p><strong><em>java -jar HSM.jar</em></strong></p>
+    <p>&nbsp;</p>
+    <p><a name="usage" id="Usage">2. Usage</a></p>
+    <p>After the application is started two services will be available. The webmenu service at default port 8080 for testing and general server administration and the http interface at port 9090.</p>
+    <p>To login to the webmenu, default username and password is admin and password 12345</p>
+    <p>Below is the application menu screenshot</p>
+    <p><img src="screen1.jpg" alt="screen1" width="350" height="375" /></p>
+    <p>&nbsp;</p>
+    <p>All the configurable properties are in the properties directory, which should be self explanatory. </p>
+<p>The LMK(Lokal Master Keys) are stored in the keys folder. The DES LM is in the file DES.key while the 2TDES and TDES LMK are in the file DESede.key</p>
+<p>All the logs are stored in the log directory.</p>
+<p>&nbsp;</p>
+<p><a name="interface" id="interface">3. Interface</a></p>
+<p>The HTTP Interface is located at the default port 9090, its a simple HTTP GET based interface which allows to be easily used programatically from other applications. For example to generate a key just type the following url</p>
+<p><a href="http://localhost:9090/genKey?alg=DES&amp;keyType=CLEAR">http://hsmhostt:9090/genKey?alg=DES&amp;keyType=CLEAR</a></p>
+<pre>
+And the output will be 
+
+3E04CB5789B60E75;653C0B</pre>
+<p>First some terminology definitions</p>
+<p><strong><em>keyType</em></strong> means the type of key used or generated which can be a CLEAR KEY or a CRYPT ed key. A Clear key is the key in plain text HEXSTRING. a CRYPT ed is a key that is wrapped/encrypted under another key, in HarSM that usually means the LMK.</p>
+<p><strong><em>dataType</em></strong> is the format of the data used, which can be a HEXSTRING or an ASCII Text</p>
+<p>For example the ASCII Text SIMPLEHSM</p>
+<p>Has the HEXSTRING Value of 53494D504C4548534D which is the ASCII Byte HEx value of the String.</p>
+<p>For some functions such as the MAC and encryption/decryption routine, HarSM accept the input to be either of ASCII Text or HEXSTRING.</p>
+<p><strong><em>KCV </em></strong>means the key check value of the key</p>
+<p>&nbsp;</p>
+<p><a name="keygen" id="keygen">4. Key Generation</a></p>
+<p>HarSM can generate DES, TDES and 2TDES key.</p>
+<p><em><strong>FORMAT : </strong></em></p>
+<p><em><strong>http://hsmhost:9090/genKey?alg=[DES/TDES/2TDES]&amp;</strong></em></p>
+<p><em><strong>k</strong></em><em><strong>eyType=[CLEAR/CRYPT]<br />
+</strong></em><strong></strong></p>
+<p><em><strong>OUTPUT :<br />
+  </strong></em>KEY;KCV<br />
+</p>
+<p><strong><em>EXAMPLE :<br />
+  </em></strong>http://localhost:9090/genKey?alg=DES&amp;keyType=CLEAR</p>
+<br>
+<strong><em>RESULT<br>
+</em></strong><br>
+3E04CB5789B60E75;653C0B
+<p>&nbsp;</p>
+<p><a name="keygencomp" id="keyfromcomp">5. Generate Key from Components</a></p>
+<p>This method is for key generation from preset components using the XOR Method.</p>
+<p><strong><em>FORMAT:<br />
+  </em></strong></p>
+<p><strong>http://hsmhost:9090/genKeyCmp?cmps={KeyComponent1;KeyComponent2;xxxxx}</strong></p>
+<p><strong>&amp;keyType=[CLEAR/CRYPT]&amp;alg=[DES/TDES/2TDES]<br />
+  </strong></p>
+<p><strong><em>OUTPUT :<br />
+  </em></strong>KEY;KCV<br />
+</p>
+<p><strong><em>EXAMPLE :</em></strong><em><br />
+  </em>http://localhost:9090/genKeyCmp?cmps=5876B6E561317C73;</p>
+<p>B02F8A8AB0853473&amp;keyType=CLEAR&amp;alg=DES<br />
+</p>
+<p><strong>RESULT :<br />
+  </strong>E8593C6FD1B44810;859B84</p>
+<p>&nbsp;</p>
+<p><a name="kcv" id="keycheckvalue">6. Key Check Value Generation</a></p>
+<p>Calculates the key check value of the key. Don't forget to specify wether its a CLEAR key or CRYPT key(encrypted under the HarSM default LMK)</p>
+<p><strong><em>FORMAT :<br />
+</em></strong>http://hsmhost:9090/checkKey?alg=[DES/TDES/2TDES]&amp;</p>
+<p>keyType=[CLEAR/CRYPT]&amp;key={Key}<br />
+  </p>
+<p><strong><em>OUTPUT  : <br />
+  </em></strong>KCV<br />
+  </p>
+<p><strong>EXAMPLE<br />
+  </strong></p>
+<p>http://localhost:9090/checkKey?keyType=CLEAR&amp;alg=DES</p>
+<p>&amp;key=AD9440438571016B</p>
+<p><strong>RESULT</strong>
+  </p>
+<p>696A9C
+</p>
+<p>&nbsp;</p>
+<p><a name="crypt" id="crypt">7. Encrypt/Decrypt Data</a></p>
+<p>If Key=Null LMK is USed </p>
+<p><strong><em>FORMAT :</em></strong></p>
+<p><em><strong></strong></em><strong>http://hsmhost:9090/crypt?data={DATA}&amp;dataType=[HEXSTRING/ASCII]</strong></p>
+<p><strong>&amp;key={KEY}&amp;keyType=[CLEAR/CRYPT]&amp;function=[ENC/DEC]</strong></p>
+<p><strong>&amp;alg=[DES/TDES/2TDES]&amp;outputTye=[ASCII/HEXSTRING] </strong></p>
+<p><strong><em>OUTPUT :</em></strong> PROCESSED DATA </p>
+<p><strong><em>EXAMPLE </em>1 :</strong>http://localhost:9090/crypt?data=0100000000000000&amp;function=ENC&amp;alg=DES</p>
+<p>&amp;dataType=HEXSTRING&amp;key=BC2092F2B6AE2AD0&amp;keyType=CLEAR</p>
+<p>&amp;outputType=HEXSTRING </p>
+<p><strong><em>RESULT :</em></strong></p>
+<p>B146671A31DD7D4F </p>
+<p><strong><em>EXAMPLE 2 :</em></strong></p>
+<p>http://localhost:9090/crypt?data=B146671A31DD7D4F&amp;function=DEC&amp;alg=DES</p>
+<p>&amp;dataType=HEXSTRING&amp;key=BC2092F2B6AE2AD0&amp;keyType=CLEAR</p>
+<p>&amp;outputType=HEXSTRING </p>
+<p><strong><em>RESULT</em> :</strong></p>
+<p>0100000000000000 </p>
+    <p>&nbsp;</p>
+    <p><a name="trans" id="keytranslate">8. Key Translation</a></p>
+    <p>To Translate a key from under one key to another key</p>
+    <p>If key2 value is null LMK is used</p>
+    <p><strong><em>FORMAT : </em></strong></p>
+    <p>http://localhost:9090/trans?data={source key}&amp;key={Wrapping Key}&amp;keyType=[CLEAR/CRYPT]&amp;key2={target wrapping key}&amp;keyType2=[CLEAR/CRYPT] </p>
+    <p><strong><em>OUTPUT : </em></strong></p>
+    <p>KEY;KCV </p>
+    <p><em><strong>EXAMPLE : </strong></em>http://localhost:9090/trans?data=23C0F94353687655&amp;key=4767355BDFCD4ED7</p>
+    <p>&amp;keyType=CRYPT&amp;alg=DES&amp;key2=2AA20D8AE9BC5440&amp;keyType2=CLEAR </p>
+    <p><strong><em>RESULT :  </em></strong></p>
+    <p>19DF9AD52A069C4A;60EB6B </p>
+    <p>&nbsp;</p>
+    <p><a name="mac" id="MAC">9. MAC Generation</a></p>
+    <p>This function generates a standard ANSI MAC based on CBC DES algorithm</p>
+    <p>Which is the most commonly used MAC in ISO 8583.</p>
+    <p><strong><em>FORMAT : </em></strong></p>
+    <p>http://localhost:9090/genMAC?data={Data to be MACed}</p>
+    <p>&amp;dataType=[ASCII/HEXSTRING]&amp;key={MACKEY}&amp;keyType={CLEAR/CRYPT}</p>
+    <p>&amp;outputType=[ASCII/HEXSTRING] </p>
+    <p><strong><em>OUTPUT </em></strong>:</p>
+    <p>MAC </p>
+    <p><strong><em>Example</em></strong> http://localhost:9090/genMAC?data=03082040172040171&amp;key=443BB859A146CB8C</p>
+    <p>&amp;keyType=CRYPT&amp;dataType=ASCII&amp;alg=DES </p>
+    <p><strong><em>RESULT : </em></strong></p>
+    <p>1B4F838C </p>
+    <p>&nbsp;</p>
+    <p><a name="pinblock" id="pinblock">10. PINBLOCK Generation</a></p>
+    <p>This function generates an encrypted pinblock according to the ANSI ISO-0 Format. Which again is the most commonly used format for PINBLOCK.</p>
+    <p> <em><strong>FORMAT : </strong></em></p>
+    <p>http://hsmhost:9090/pinblock?pin={PIN}&amp;pan={FULL PAN}&amp;key={ZPK KEY}&amp;keyType=[CLEAR/CRYPT]&amp;alg=[DES/TDES/2TDES] </p>
+    <p><em><strong>EXAMPLE </strong>:</em>http://localhost:9090/pinblock?pin=222222&amp;pan=5104813099990418</p>
+<p>&amp;key=19DF9AD52A069C4A&amp;keyType=CRYPT&amp;alg=DES </p>
+    <p><strong><em> RESULT :</em></strong></p>
+    <p>FCB4BC06025448B9 </p>
+    <p>&nbsp;</p>
+    <p><a name="cvv" id="pinblock2">11. CVV Calculation</a></p>
+    <p>This function calculate the CVV for a PAN. Compatible with VISA, Mastercard and AMEX CVV/CSC.</p>
+    <p><em>Notes :</em></p>
+    <p><em>- For CVV2 use SVC 000</em></p>
+    <p><em>- For CVV3 SVC is 502</em></p>
+    <p><em>- iCVV use svc of 999</em></p>
+    <p></p>
+<p> <em><strong>FORMAT : </strong></em></p>
+    <p>http://hsmhost:9090/cvv?&amp;pan={FULL PAN}&amp;cvkpair={CVK Key Pair }&amp;svc={Service Code}&amp;expdate={Expiry Date in mmYY or YYmm format}</p>
+    <p>&nbsp;</p>
+    <p><em><strong>EXAMPLE </strong>:</em>http://localhost:9090/cvv?pan=123456789012345&amp;</p>
+    <p>cvkpair=12345678123456781234567812345678&amp;svc=233&amp;expdate=1105</p>
+    <p><strong><em>RESULT :</em></strong></p>
+    <p>242</p>
+    <pre>&nbsp; </pre>
+    <p><a name="PVV" id="pinblock3">12. PVV Calculation</a></p>
+    <p><em>UPDATE, MAKE SURE YOU KNOW WHICH PART OF THE PAN TO USE FOR THIS</em></p>
+    <p><em>ITS USUALLY THE RIGHTMOST 11 DIGIT EXCLUDING THE LAST DIGIT AND THE CHECK DIGIT.</em></p>
+    <p>Calculates the PVV value for a given PIN and PAN number. Compatible with VISA and Mastercard PVV algorithm.</p>
+<p><em><strong>FORMAT : </strong></em></p>
+<p>http://hsmhost:9090/pvv?&amp;pan={FULL PAN}&amp;pvkpair={PVK Key Pair }&amp;PVKI={PVK Index Value}&amp;pin={CLEAR PIN}</p>
+<p>&nbsp;</p>
+<p><em><strong>EXAMPLE </strong>:</em>http://localhost:9090/pvv?pan=5999997890123412&amp;pin=1234</p>
+<p>&amp;pvki=1&amp;pvkpair=4CA2161637D0133E5E151AEA45DA2A12</p>
+<p><strong><em>RESULT :</em></strong></p>
+    <p>0798 </p>
+    <p></p>
+    <p><br class="clearfloat" />
+    </p>
+  </div>
+  <div id="footer">
+    <p><strong><em>Copyright Hairi Abass 2010</em></strong></p>
+  <!-- end #footer --></div>
+<!-- end #container --></div>
+</body>
+</html>
