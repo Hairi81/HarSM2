@@ -1,0 +1,66 @@
+data_fname = data
+type_fname = type
+function_fname = function
+alg_fname = alg
+key_fname = key
+key2_fname = key2
+
+keyType_fname = keyType
+keyType2_fname = keyType2
+
+dataType_fname=dataType
+outputType_fname=outputType
+cryptPath = /crypt
+keyGenPath = /genKey
+keyGenCmpPath = /genKeyCmp
+
+keyCheckPath = /checkKey
+
+
+
+zmk1_fname=cmps
+zmk2_fname=zmk2
+zmk3_fname=zmk3
+keycheck_fname=keycheck
+
+pin_fname=pin
+pan_fname=pan
+cvkpair_fname=cvkpair
+pvkpair_fname=pvkpair
+svc_fname=svc
+expdate_fname=expdate
+pvki_fname=pvki
+
+
+cvvPath=/cvv
+pvvPath=/pvv
+
+
+
+zmkUnderLMKPath = /zmkUnderLMK
+
+
+
+TransUZMKtoLMKPath =/transobs
+transalatePath = /trans
+
+
+pinblockPath = /pinblock
+
+genMacPath= /genMAC
+
+
+
+genUDKPath =/genUDK
+panseqno_fname=panseqno
+genEMVSessionKeyPath=/genSK
+ATC_fname=atc
+genARQCPath =/genARQC
+genARPCPath=/genARPC
+arqc_fname=arqc
+respcode_fname=respcode
+
+
+
+
+

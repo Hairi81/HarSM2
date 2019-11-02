@@ -1,0 +1,7 @@
+DESkey_fname=DES.key
+TDES16key_fname=DESede16.key
+DES_fname=DES
+TDES_fname=TDES
+TDES2_fname=2TDES
+desMode=ECB
+desPadding=NoPadding
