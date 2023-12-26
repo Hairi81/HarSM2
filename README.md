@@ -3,6 +3,8 @@ HarSM Java HSM Simulator
 
 formerly from http://www.m-sinergi.com/hairi
 
+new home at http://hsmsimulator.com/
+
 2010-2019
 
 Read the api docs at doc.html
